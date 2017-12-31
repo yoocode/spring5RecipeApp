@@ -29,6 +29,10 @@ public class Recipe {
     @Lob
     private Byte[] image;
 
+    //annotate to tell this attribute is enum. EnumType tells String value into Table (vs Ordinal which use number)
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
+
     public Long getId() {
         return id;
     }
