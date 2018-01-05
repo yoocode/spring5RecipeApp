@@ -98,7 +98,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         //Guacamole Recipe
         Recipe quacRecipe = new Recipe();
-        quacRecipe.setDescription("Perfect Guacamole");
+        quacRecipe.setDescription("Perfect Guacamole!!");
         quacRecipe.setPrepTime(10);
         quacRecipe.setCookTime(0);
         quacRecipe.setDifficulty(Difficulty.EASY);
@@ -124,18 +124,21 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                         "\n" +
                         "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
 
-        quacNotes.setRecipe(quacRecipe);
-        quacRecipe.setNotes(quacNotes);
+        //following two lines are for bidirectional - it could be one method call
+//        quacNotes.setRecipe(quacRecipe); //it is no longer needed from refactor of setNote(Note note) in Recipe Entity
+        quacRecipe.setNotes(quacNotes);//setRecipe() within Recipe.setNotes() takes care of above line
 
         //add ingredients
-        quacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("Cilantro", new BigDecimal(2), tableSpoonUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUom, quacRecipe));
-        quacRecipe.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom, quacRecipe));
+//        quacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUom, quacRecipe));
+        //after refactoring of having addIngradient() in Ingredient and an overloaded constructor
+        quacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUom));
+        quacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom));
+        quacRecipe.addIngredient(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUom));
+        quacRecipe.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom));
+        quacRecipe.addIngredient(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom));
+        quacRecipe.addIngredient(new Ingredient("Cilantro", new BigDecimal(2), tableSpoonUom));
+        quacRecipe.addIngredient(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUom));
+        quacRecipe.addIngredient(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom));
 
 
         quacRecipe.getCategories().add(americanCategory);
