@@ -1,6 +1,7 @@
 package yoo.springframework5.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,8 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @OneToOne(cascade = CascadeType.ALL)//if Recipe is deleted, its notes will be deleted as well
@@ -23,13 +26,7 @@ public class Recipe {
 
     //relationship n a recipe object owns ingredients
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
-
-    @ManyToMany
-    @JoinTable(name = "recipe_category",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Ingredient> ingredients = new HashSet<>();//better to initialize it to avoid NullPointerException
 
     @Lob
     private Byte[] image;
@@ -37,6 +34,12 @@ public class Recipe {
     //annotate to tell this attribute is enum. EnumType tells String value into Table (vs Ordinal which use number)
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;

@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class Spring5recipeappApplicationTests {
 
+	//Spring integration test; whether it loads correctly. takes long
 	@Test
 	public void contextLoads() {
 	}

@@ -15,8 +15,18 @@ public class Ingredient {
     @ManyToOne//no cascade
     private Recipe recipe;
 
-    @OneToOne//no cascade to affect UnitOfMeasure
-    private UnitOfMeasure unitOfMeasure;
+    @OneToOne(fetch = FetchType.EAGER)//no cascade to affect UnitOfMeasure
+    private UnitOfMeasure uom;
+
+    public Ingredient(){}
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom,
+                      Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+        this.recipe = recipe;
+    }
 
     public Long getId() {
         return id;
